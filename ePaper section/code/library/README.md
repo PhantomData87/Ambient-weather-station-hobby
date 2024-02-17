@@ -7,17 +7,17 @@ Now the reason why this exist instead of using the manufacturers code is simply 
 Now it's not my claim that this code is somehow "superior" but rather a bit more "managable". You be the judge of that.  
   
 # Progress
-Done making "testing" class  
-Done writing main library  
+1. Done making "testing" class  
+2. Done writing main library  
   - You can do MOST of the funcitons of the original manufacturer's code  (Missing; Draw arbitrary line)  
   - Introduced more precise pixel precision  
   - Introduced better rotation  
   - Introduced array-less drawing (Explained below)  
   - Simplified class structure (no longer 3 files, now just one massive file)  
   - Heavy reduce usage on ram  
-Need to figure out if one can read screen (To preserve things that had been drawn)  
-Need to optimize further the code  
-Need to innovate further the code  
+3. Need to figure out if one can read screen (To preserve things that had been drawn)  
+4. Need to optimize further the code  
+5. Need to innovate further the code  
 
 # Explanation of why I decided to go for "array-less"
 I had bought a simple chip named "Adafruit ItsyBitsy 32u4 - 5V 16MHz", and I didn't realize early on the important need of having a large storage & ram space. I lucked out on the storage, but the ram on this is **2K bytes**. Thus when I ran the original code I had around 3/4th of the memory dedicated to an array. Which I later found out it was really unncessary since all it did was store info before sneding it anyways. So as a challenge I wanted to see if I could recreate the code without the reliance on an array. Answer is YES!  
