@@ -6,6 +6,8 @@ Now the reason why this exist instead of using the manufacturers code is simply 
   
 Now it's not my claim that this code is somehow "superior" but rather a bit more "managable". You be the judge of that.  
   
+Also. I included a simple python file to showcase my initial thinking of how to draw bytes without an array. So you can see some of that earlier thought process  
+  
 # Progress
 1. Done making "testing" class  
 2. Done writing main library  
