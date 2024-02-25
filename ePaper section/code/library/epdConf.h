@@ -13,7 +13,6 @@
 #define epdConf_h
 #include <Arduino.h>
 #include "fonts.h"
-#include "image.h" // I do not mind if you remove this and replace it with a different class
 
 /*
 
@@ -48,7 +47,7 @@ class epd {
     void drawCharArray(unsigned int xStart, unsigned int yStart, unsigned char* string, unsigned int arraySize, info* font);
     void drawRectangleArea(unsigned int xStart, unsigned int yStart, unsigned int width, unsigned int height);
     void drawCircle(unsigned int xStart, unsigned int yStart, unsigned int radius, unsigned int additionalThickness = 0);
-    void drawImage(unsigned int xStart, unsigned int yStart, info* info, int offsetImage = 0);
+    void drawImage(unsigned int xStart, unsigned int yStart, info* info, unsigned int offsetImage = 0);
 
     // Helper functions
     unsigned int numToIndex(unsigned int num);

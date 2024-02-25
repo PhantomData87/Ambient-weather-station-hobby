@@ -1,0 +1,8 @@
+Red = Real position of placed item
+Orange = A single static image
+Yellow = A value that has been calculated from sensors or such
+Green = The white screen
+Light blue = A image that may change based on the yellow values
+Blue = Static text
+Light purple = Space that is being overriden by a item that should make it empty once again
+Black = Borders to help compartimentalize everything

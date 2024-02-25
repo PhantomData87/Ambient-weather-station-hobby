@@ -2,9 +2,9 @@
   ******************************************************************************
     @file     epdConf.cpp
     @author   Alonzo Ortiz-Sanchez
-    @version  V1.0.0
+    @version  V1.1.0
     @made     02-January-2024
-    @modified 16-Feburary-2024
+    @modified 24-Feburary-2024
     @brief    The combination and interlinkedness of "epd1in54_V2", "epdif", and "epdpaint"
     @note     Feel free to modify. I don't expect my crummy pixel art to be used and do not mind finding it elsewhere.
     @warning  Any comments left over that "seem" meaningless are left since I encountered odd cases from neglecting them.
@@ -105,20 +105,20 @@ void epd::drawCharArray(unsigned int xStart, unsigned int yStart, unsigned char*
   }
 
   // Count the number of characters & start preparing. We are measuing bytes here
-  unsigned int widthOfChar = this->numToIndex(font->Width); // For readability, and has become a multiple of 8
+  unsigned int widthOfChar = (font->Width / 8) + ((font->Width % 8 == 0) ? 0 : 1); // For readability, and has become a multiple of 8
   unsigned int bitOffset = xStart % 8; // When we are unable to obtain a precisely placed multiple of 8
   unsigned int width = widthOfChar * arraySize;
   unsigned int height = font->Height;
-  this->drawPrep(xStart, yStart, (8 * arraySize * widthOfChar), height);
+  this->drawPrep(xStart, yStart, (8 * width), height);
 
   // Safety for drawing. I assume no one would be dumb enough to pick a initial position in the negatives.
   if (this->canvasWidthEnd == this->screenWidth - 1) {
-    for (int i = xStart + (8 * arraySize * widthOfChar) - 1; i > 200; i -= 8) {
+    for (int i = xStart + (8 * width) - 1; i > this->screenWidth; i -= 8) {
       width -= 1;
     }
   }
   if (this->canvasHeightEnd == this->screenHeight - 1) {
-    for (int i = yStart + height - 1; i > 200; i -= 1) {
+    for (int i = yStart + height - 1; i > this->screenHeight; i -= 1) {
       height -= 1;
     }
   }
@@ -173,12 +173,11 @@ void epd::drawCharArray(unsigned int xStart, unsigned int yStart, unsigned char*
         widthCounter = this->xRotation ? widthOfChar - 1 : 0;
         charCounter += xCounter;
       }
-
-      // For our left/right most byte to be sent last. Unless we neved used that byte in which case we ignore
-      if (((i + 1 == width) and not this->xRotation) or ((i == 0) and this->xRotation) and bitOffset > 0 ) {
-        charRight = charRight ^ (this->invertColor ? 0x00 : 0xFF); // Consider a inverse
-        this->spiData(charRight); // Do 0x02 to test if it's drawing a line at the very end
-      }
+    }
+    // For our left/right most byte to be sent last. Unless we neved used that byte in which case we ignore
+    if (bitOffset > 0 ) {
+      charRight = charRight ^ (this->invertColor ? 0x00 : 0xFF); // Consider a inverse
+      this->spiData(charRight); // Do 0x02 to test if it's drawing a line at the very end
     }
   }
   this->wait();
@@ -199,12 +198,12 @@ void epd::drawRectangleArea(unsigned int xStart, unsigned int yStart, unsigned i
 
   // Safety for drawing. I assume no one would be dumb enough to pick a initial position in the negatives.
   if (this->canvasWidthEnd == this->screenWidth - 1) {
-    for (int i = xStart + width; i > 200; i -= 1) {
+    for (int i = xStart + width; i > this->screenWidth; i -= 1) {
       width -= 1;
     }
   }
   if (this->canvasHeightEnd == this->screenHeight - 1) {
-    for (int i = yStart + height - 1; i > 200; i -= 1) {
+    for (int i = yStart + height - 1; i > this->screenHeight; i -= 1) {
       height -= 1;
     }
   }
@@ -254,13 +253,13 @@ void epd::drawCircle(unsigned int x, unsigned int y, unsigned int radius, unsign
   int yOffset = 0;
   bool sendLast = true;
   if (this->canvasWidthEnd == this->screenWidth - 1) {
-    for (int i = x + circumference; i > 200; i -= 1) {
+    for (int i = x + circumference; i > this->screenWidth; i -= 1) {
       xOffset -= 1;
     }
     sendLast = false;
   }
   if (this->canvasHeightEnd == this->screenHeight - 1) {
-    for (int i = y + circumference; i > 200; i -= 1) {
+    for (int i = y + circumference; i > this->screenHeight; i -= 1) {
       yOffset -= 1;
     }
   }
@@ -295,14 +294,15 @@ void epd::drawCircle(unsigned int x, unsigned int y, unsigned int radius, unsign
 }
 
 // Here we take an image that has been pre-made and stored in FLASH. We will account for x-axis positioning
-void epd::drawImage(unsigned int xStart, unsigned int yStart, info* info, int offsetImage) {
+void epd::drawImage(unsigned int xStart, unsigned int yStart, info* info, unsigned int offsetImage) {
   if (this->channelHigh == true) {
     this->channelHigh = false; // I assume an image wants 9 bits of data, right?
     this->wireChannel(); // Wouldn't want to keep calling this unless I need too
   }
 
   // Defined for redability
-  int width = this->numToIndex(info->Width);;
+  int realWidth = (info->Width / 8) + ((info->Width % 8 == 0) ? 0 : 1);
+  int width = (info->Width / 8) + ((info->Width % 8 == 0) ? 0 : 1);
   int height = info->Height;
   int bitOffset = xStart % 8; // When we are unable to obtain a precisely placed multiple of 8
   unsigned int offsetArea = offsetImage * width * height;
@@ -312,12 +312,12 @@ void epd::drawImage(unsigned int xStart, unsigned int yStart, info* info, int of
 
   // Safety for drawing. I assume no one would be dumb enough to pick a initial position in the negatives.
   if (this->canvasWidthEnd == this->screenWidth - 1) {
-    for (int i = xStart + info->Width - 1; i > 200; i -= 8) {
+    for (int i = xStart + (width * 8) - 1; i > this->screenWidth; i -= 8) {
       width -= 1;
     }
   }
   if (this->canvasHeightEnd == this->screenHeight - 1) {
-    for (int i = yStart + height - 1; i > 200; i -= 1) {
+    for (int i = yStart + height - 1; i > this->screenHeight; i -= 1) {
       height -= 1;
     }
   }
@@ -338,13 +338,13 @@ void epd::drawImage(unsigned int xStart, unsigned int yStart, info* info, int of
   }
 
   // Start with an abstract of the height. Where the height is in bits.
-  for (int j = yBegin; (j < height and not this->yRotation) || (j >= 0 and this->yRotation); j += yCounter) {
+  for (int j = yBegin; (j < height and not this->yRotation) || (j >= 0 and this->yRotation); j += yCounter) {      
     byte charLeft = 0x00;
     byte charRight = 0x00;
     // Then obtain the character from FLASH storage by abstracting this as bytes.
-    for (int i = xBegin; (i < width and not this->xRotation) || (i >= 0 and this->xRotation); i += xCounter) {
+    for (int i = xBegin; (i < width and not this->xRotation) || (i >= 0 and this->xRotation); i += xCounter) {    
       // Obtaining character from FLASH
-      byte charRetrieved = pgm_read_byte(&(info->table[offsetArea + this->numToIndex(info->Width) * j + i])); // Byte obtain goes against what the screen recognizes as a "black" or "white"
+      byte charRetrieved = pgm_read_byte(&(info->table[offsetArea + realWidth * j + i])); // Byte obtain goes against what the screen recognizes as a "black" or "white"
 
       // Consider xRotation:
       if (this->xRotation) {
@@ -361,8 +361,11 @@ void epd::drawImage(unsigned int xStart, unsigned int yStart, info* info, int of
       // Sending byte
       this->spiData(charLeft);
     }
-    charRight = charRight ^ (this->invertColor ? 0x00 : 0xFF); // Consider a inverse
-    this->spiData(charRight); // Do 0x02 to test if it's drawing a line at the very end
+    // For our left/right most byte to be sent last. Unless we neved used that byte in which case we ignore
+    if (bitOffset > 0) {
+      charRight = charRight ^ (this->invertColor ? 0x00 : 0xFF); // Consider a inverse
+      this->spiData(charRight); // Do 0x02 to test if it's drawing a line at the very end
+    }
   }
   this->wait();
 }

@@ -2,9 +2,9 @@
   ******************************************************************************
     @file     ePaper_library_test
     @author   Alonzo Ortiz-Sanchez
-    @version  V1.0.0
+    @version  V1.0.1
     @made     02-January-2024
-    @modified 16-Feburary-2024
+    @modified 19-Feburary-2024
     @brief    A sketchpad to test the various functions that I had written. Let's see if these "tests" are at all helpful for the likes of you
     @note     Feel free to modify. I don't expect my crummy pixel art to be used and do not mind finding it elsewhere
     @mention  If you have questions on why things are defined the way they are. Feel free to read "README.md" to obtain some answers.
@@ -12,6 +12,7 @@
 */
 
 #include "epdConf.h"
+#include "image.h"
 epd epd;
 
 void setup()
@@ -141,7 +142,7 @@ void screenTest() {
   epd.drawCharArray(175, 70, testing, 7, &Font8); // No rotation
   epd.switchXRotation();
   epd.switchYRotation();
-  epd.drawImage(180, 80, &Battery); // A little early, but whatever
+  epd.drawImage(180, 80, &Battery); // Test failed due to new changes
   epd.drawRectangleArea(180, 110, 20, 5);
   epd.drawCircle(180, 120, 10); // 21 pixel circumference
   epd.drawCharArray(180, 155, testing, 7, &Font8); // No rotation

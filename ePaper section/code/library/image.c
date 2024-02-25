@@ -6,7 +6,7 @@
   * @made     03-January-2024
   * @modified 16-Feburary-2024
   * @brief    Code for image.h & my crummy images
-  * @note     Feel free to modify. I don't expect my crummy pixel art to be used and do not mind finding it elsewhere
+  * @note     Feel free to modify. I don't expect my crummy pixel art to be used and do not mind finding it elsewhere. Also using all images adds ~6382 bytes
   */
 
 #include "image.h"

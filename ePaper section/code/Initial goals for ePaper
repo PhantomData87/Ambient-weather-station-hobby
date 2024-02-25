@@ -1,0 +1,37 @@
+  ePaper display 200x200 1.54 inch code
+
+  Need to consider between Adafruit GFX which has a substantially lower ram and sketch use. Or use the official waveshare one. They are both already pre-loaded as libraries
+  Decided to stick with manufacturer's specifications. Since it was designed for ePaper.
+  Adafruit GFX is made specifically for OLED displays
+  
+  // Precautions (https://www.waveshare.com/wiki/1.54inch_e-Paper_Module_Manual#Precautions)
+  To not expose screen to UV light or direct sunlight. Since e-paper is more design for indoor use. (https://www.waveshare.com/wiki/1.54inch_e-Paper_Module_Manual#accordion20)
+  We need to do a full refresh after we have done to many partial refreshes (To avoid damaging)
+  The screen msut be deactivated when not in use. The HIGH voltage used to edit the screen will at some point damage the screen. Thus we must follow proper sleep etiquet.
+  Or to power off the screen. Simply disconnect the main line with a analog switch or something. (This is how you preserve its life expectancy. (NOT USED FOR CONSTANT REFRESHING)
+  Refresh interval atleast 180 seconds (Unless our screen supports something named "local brush function".
+  Refresh atleast once every 24 hours (Especially if we are using a tri-color display)
+  If it will not be used for a signifcant long time, we must enforce a "clear" to the screen before turning it off for good
+  In sleep mode, it will ignore all "image" data sent to it. Thus it requires us to initialize it once more
+  Handle the ribbon (FPC) cable very well. It's extremely fragile just like the screen itself.
+  
+  // Things to aliviate
+  Need to reduce code size
+  Need to optimize code
+  Need to reduce library size
+  Run screen test: https://www.youtube.com/watch?v=lF2_QXb2ex0
+  Obtain UV light protection "shield"
+  Understand the different modes of this product
+  Ensure when waking from sleep, we "reinitialize" every time.
+  
+  // Challenge constraints (Do not remove)
+  Most be sutiable for <2k RAM & <32k Storage (Bare sketch baseline: I am using 3378 bytes for storage & 149 bytes of RAM)
+  Refreshing screen must not be too power consuming
+
+  // Considerations
+  A partial refresh is as follows:
+    1. We refresh the background image first
+    2. Refresh old data and new data
+  The screens have a built-in temperature sensors (As of atleast 2023 DECEMBER)
+  Follow the sketch & More importantly. Stick to small size fonts. The fonts take up so much storage space. Stick with font 8 or 12.
+  More indepth considerations: https://github.com/esphome/esphome-docs/blob/current/components/display/waveshare_epaper.rst (Maybe not, since it's for automation)
