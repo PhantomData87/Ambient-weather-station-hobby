@@ -16,7 +16,7 @@ Also. I included a simple python file to showcase my initial thinking of how to 
   - Introduced better rotation  
   - Introduced array-less drawing (Explained below)  
   - Simplified class structure (no longer 3 files, now just one massive file)  
-  - Heavy reduce usage on ram  
+  - Heavy reduced usage on ram  
 3. Need to figure out if one can read screen (To preserve things that had been drawn)  
 4. Need to optimize further the code  
 5. Need to innovate further the code  
@@ -25,3 +25,11 @@ Also. I included a simple python file to showcase my initial thinking of how to 
 I had bought a simple chip named "Adafruit ItsyBitsy 32u4 - 5V 16MHz", and I didn't realize early on the important need of having a large storage & ram space. I lucked out on the storage, but the ram on this is **2K bytes**. Thus when I ran the original code I had around 3/4th of the memory dedicated to an array. Which I later found out it was really unncessary since all it did was store info before sneding it anyways. So as a challenge I wanted to see if I could recreate the code without the reliance on an array. Answer is YES!  
 
 Currently this exists to permit mroe lower end or memory limited devices to work more properely without the need to sacrifice a huge portion of memory.
+  
+# Images preview of running the test  
+### Simple Draw Test  
+![drawing test](https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/library/Basic%20drawing%20test.jpg)  
+### Partial Update Test  
+![partial update effect](https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/library/Mini%20partial%20refresh.jpg)  
+### Error correction & Image drawing Test  
+![error correction cuts of image correctly](https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/library/Drawing%20images%20and%20error%20correction.jpg)  
