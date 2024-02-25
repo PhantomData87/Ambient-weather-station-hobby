@@ -8,7 +8,7 @@ Yes, mostly. This is a template where the main file will be derived from.
   
 # Images  
 ### UI preview  
-![ui preview]([http://url/to/img.png](https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/application/ui%20preview.jpg)https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/application/ui%20preview.jpg)
+![ui preview]([http://url/to/img.png](https://github.com/PhantomData87/Ambient-weather-station-hobby/blob/current/ePaper%20section/code/application/ui%20preview.jpg)  
 
 # Author
 By: Alonzo Ortiz-Sanchez  
