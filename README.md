@@ -1,3 +1,6 @@
+> [!warning]
+> Project has been frozen and moved towards codeberg: https://codeberg.org/PhantomDocuments/Ambient-weather-station-hobby
+
 # What is this?
 I needed a simple device that could tell me the temperature & dust density in a local space. I could have bought something in amazon for instance just to get that need out of the way. Until I thought about it; What if I make one? After some pondering, I knew I lacked the skills to make one, but yet it seemed so much more intriguing than learnning precise math (The one that requires perfect grammer). So here we are. This is a project that went from a need, needed to re-learn fundementals of electrical engineering, learn the basics of IoT development, and learn to interface with hardware.  
 
